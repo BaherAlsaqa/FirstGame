@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activities.Settings">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_app_sound"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="@dimen/paddingstartend">
+
+            <TextView
+                android:id="@+id/app_sound_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:gravity="end|center"
+                android:text="@string/app_sound"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/textsize20"
+                tools:ignore="RtlCompat" />
+
+            <Switch
+                android:id="@+id/switch_app_sound"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:checked="true"
+                tools:ignore="RtlCompat" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black_view" />
+
+        <RelativeLayout
+            android:id="@+id/rl_level"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:padding="@dimen/paddingstartend">
+
+            <TextView
+                android:id="@+id/sound_level_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:gravity="end|center"
+                android:text="@string/sound_level"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/textsize20"
+                tools:ignore="RtlCompat" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sound_level_text"
+                android:orientation="horizontal">
+
+                <SeekBar
+                    android:id="@+id/sb_sound_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="@dimen/marginstart1"
+                    android:layout_weight="0.9"
+                    android:max="10" />
+
+                <ImageView
+                    android:id="@+id/iv_sound"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="@dimen/margintop12"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/ic_volume_off_black_24dp"
+                    tools:ignore="RtlCompat,VectorDrawableCompat" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black_view" />
+
+
+        <RelativeLayout
+            android:id="@+id/rl_box_sound"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="@dimen/paddingstartend">
+
+            <TextView
+                android:id="@+id/box_sound_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:gravity="end|center"
+                android:text="@string/click_sound"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/textsize20"
+                tools:ignore="RtlCompat" />
+
+            <Switch
+                android:id="@+id/switch_box_sound"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:checked="true"
+                tools:ignore="RtlCompat" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black_view" />
+
+        <RelativeLayout
+            android:id="@+id/rl_vibrate"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="@dimen/paddingstartend">
+
+            <TextView
+                android:id="@+id/vibrate_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:gravity="end|center"
+                android:text="@string/vibrate"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/textsize20"
+                tools:ignore="RtlCompat" />
+
+            <Switch
+                android:id="@+id/switch_vibrate"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:checked="true"
+                tools:ignore="RtlCompat" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black_view" />
+
+    </LinearLayout>
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-1357552008801218/9215985632">
+    </com.google.android.gms.ads.AdView>
+
+</RelativeLayout>

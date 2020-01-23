@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layoutDirection="rtl">
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-1357552008801218/1135628710">
+    </com.google.android.gms.ads.AdView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/margintop">
+
+        <Button
+            android:id="@+id/playpause"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/marginend"
+            android:background="@drawable/next_btn_selector"
+            android:drawableBottom="@drawable/ic_playgame1"
+            android:paddingBottom="13dp"
+            tools:ignore="RtlCompat" />
+
+        <Button
+            android:id="@+id/rerun"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/marginend"
+            android:background="@drawable/ok_btn_selector"
+            android:drawableBottom="@drawable/ic_playagain"
+            android:paddingBottom="13dp"
+            tools:ignore="RtlCompat"
+            android:layout_toEndOf="@id/playpause"/>
+
+        <Button
+            android:id="@+id/menu"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/level_btn_selector"
+            android:drawableBottom="@drawable/ic_menugame"
+            android:paddingBottom="13dp"
+            android:layout_toEndOf="@id/rerun"
+            tools:ignore="RtlCompat" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

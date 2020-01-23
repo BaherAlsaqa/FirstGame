@@ -1,0 +1,80 @@
+<resources>
+    <string name="app_name">Pink Coin</string>
+    <string name="tap_start">Tap to start</string>
+    <string name="gameover">Game Over</string>
+    <string name="highscore">High score :</string>
+    <string name="again">Try Again</string>
+    <string name="catchball">Catch the Ball</string>
+    <string name="point20">20 point</string>
+    <string name="point5">5 point</string>
+    <string name="start">Start</string>
+    <string name="score">Score :</string>
+    <string name="gamelevels">Game Levels</string>
+    <string name="finalLevel">Congratulations! You have finished the easy levels game, supported the game evaluation and shared it with friends and waited for the next update</string>
+    <string name="hightscorebtn">Access High Score</string>
+    <string name="gamelevelseasy">Game Levels Easy</string>
+    <string name="gamelevelsmedium">Game Levels Medium</string>
+    <string name="gamelevelshard">Game Levels Hard</string>
+    <string name="logout">Logout</string>
+    <string name="challenge_yourself">Challenge yourself</string>
+    <string name="challenge_yourself_note">Challenge yourself as much time as possible playing and skipping the highest score was obtained, and challenged the increase in speed every 20 seconds.</string>
+    <string name="share_game">Share the Game</string>
+    <string name="game_rating">Game Rating</string>
+    <string name="settings">Settings</string>
+    <string name="about_game">About the game</string>
+    <string name="sharemessage">I enjoyed playing this game so I loved to share it with you</string>
+    <string name="installmessenger">Please Install Facebook Messenger</string>
+    <string name="menu">Menu</string>
+    <string name="ratemessage">Game Rating The Play Store will open</string>
+    <string name="ok">Ok</string>
+    <string name="cancle">Cancle</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="click_sound">Sound click screen</string>
+    <string name="app_sound">Application sounds</string>
+    <string name="sound_level">Level sound game</string>
+    <string name="vibrate">Vibration</string>
+    <string name="about_content">لعبة العملة الوردية تم انشاء اللعبة في 12-2018, تم تطويرها بواسطة المطور : باهر فارع السقا,  \nEmail : baheralsaqa@gmail.com .
+        \n\n- اصدار اللعبة : هذا الاصدار الاول وبدعمكم نتقدم .
+        \n\n- مهام اللعبة : المهمة في اللعبة تجميع العملة بجميع اشكالها بتحريك الصندوق للأعلى وللأسفل عن طريق النقر المتواصل والافلات على الشاشة اثناء اللعب ,هناك عدة خيارات / انواع اللعب :
+        \n\n1- يمكنك لعب تحدى نفسك وفيها يجب تخطي اعلى نتيجة تم الحصول عليها رغم زيادة السرعة كل 20 ثانية أثناء اللعب وبهذا تحدي قوي.\n\n2-
+        يمكنك لعب الخيار الاول ( لعبة مستويات سهلة ) تضم 12 مستوى متفاوتة في الصعوبة يجب عليك الفوز في كل المستويات للتمكن من لعب الخيار الثاني ( لعبة مستويات متوسطة ).\n\n3-
+        سيتم فتح الخيار الثاني ( لعبة مستويات متوسطة ) بعد الانتهاء من الخيار الاول وسيتم فتح الخيار الثالث ( لعبة مستويات صعبة ) بعد الانتهاء من الخيار الثاني وهذا بعد اطلاق الاصدار الثاني للعبة إن شاء الله وهو مرتبط بدعمكم وتقييماتكم.\n\n
+        - يمكنكم مشاركة اللعبة مع الاصدقاء عبر تطبيقات التواصل الاجتماعي للوصول لاكبر عدد ممكن من الأصدقاء .\n\n
+        - يمكنكم تقييم التطبيق لدعمنا بانتشار وتحديث اللعبة .\n\n
+        - يمكنكم تحديد الاعدادات التي تلبي احتياجاتكم ورغباتكم في اللعب .\n
+        \n- اللعبة مجانية وتحتوي على مجموعة من الاعلانات اهمها اعلانات بمكافأة وهي كلها اعلانات مستهدفة ومخصصة وهي مصدر الدخل لدينا .</string>
+    <string name="about_view_adv">Support us by viewing a Video ad</string>
+    <string name="watch">Watch</string>
+    <string name="home1">Home</string>
+    <string name="levels">Levels</string>
+    <string name="result">Result</string>
+    <string name="levelOne">Level One</string>
+    <string name="levelTwo">Level Two</string>
+    <string name="levelThree">Level Three</string>
+    <string name="levelFour">Level Four</string>
+    <string name="levelFive">Level Five</string>
+    <string name="levelSix">Level Six</string>
+    <string name="levelSeven">Level Seven</string>
+    <string name="levelEight">Level Eight</string>
+    <string name="levelNine">Level Nine</string>
+    <string name="levelTen">Level Ten</string>
+    <string name="levelEleven">Level Eleven</string>
+    <string name="levelTwelve">Level Twelve</string>
+    <string name="mainMenu_b1_1">ca-app-pub-1357552008801218/7378175220</string><!--ca-app-pub-3940256099942544/6300978111-->
+    <string name="loss">You loss</string>
+    <string name="rewardcontent">You can complete the game by watching a reward announcement</string>
+    <string name="spirits">Spirits :</string>
+    <string name="reward">Reward</string>
+    <string name="alerter_message">You have got an extra spirit you can complete playing</string>
+    <string name="alerter_message_not_complete_ad">You have not finished watching your video</string>
+    <string name="fantastic">This is a fantastic</string>
+    <string name="about_alerter_message">Thank you for your support we waited in the next release</string>
+    <string name="good">This is good</string>
+    <string name="about_not_complete_alerter_message">Thanks anyway we are waiting for the best</string>
+    <string name="error_internet">make sure you connect to the Internet</string>
+    <string name="unfortunately">Unfortunately</string>
+    <string name="error_try_again">There is problem please try again</string>
+    <string name="no_ad_inventory">There is a shortage of ad inventory</string>
+    <string name="error_try_again_later">There\'s a problem, please try later</string>
+    <string name="highScoreUp">You have passed the previous result Congratulations, continued ...</string>
+</resources>

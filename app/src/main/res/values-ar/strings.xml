@@ -1,0 +1,80 @@
+<resources>
+    <string name="app_name">العملة الوردية</string>
+    <string name="tap_start">أُنقُر للبدء</string>
+    <string name="gameover">انتهت اللعبة</string>
+    <string name="highscore">أعلى نتيجة :</string>
+    <string name="again">حاول مجددا</string>
+    <string name="catchball">عدد النقاط لكل عملة</string>
+    <string name="point20">20 نقطة</string>
+    <string name="point5">5 نقاط</string>
+    <string name="start">البدء</string>
+    <string name="score">النتيجة :</string>
+    <string name="gamelevels">مستويات اللعبة</string>
+    <string name="finalLevel">تهانينا لقد انهيت لعبة المستويات السهلة, إدعمنا بتقييم اللعبة ومشاركتها مع الاصدقاء وانتظر التحديث القادم</string>
+    <string name="hightscorebtn">أعلى مستوى</string>
+    <string name="gamelevelseasy">لعبة مستويات سهلة</string>
+    <string name="gamelevelsmedium">لعبة مستويات متوسطة</string>
+    <string name="gamelevelshard">لعبة مستويات صعبة</string>
+    <string name="logout">خروج</string>
+    <string name="challenge_yourself">تحدى نفسك</string>
+    <string name="challenge_yourself_note">تحدى نفسك باللعب أكبر وقت ممكن وتخطي أعلى نتيجة تم الحصول عليها, وتحدى زيادة السرعة كل 20 ثانية .</string>
+    <string name="share_game">شارك اللعبة</string>
+    <string name="game_rating">تقييم اللعبة</string>
+    <string name="settings">الإعدادات</string>
+    <string name="about_game">حول اللعبة</string>
+    <string name="sharemessage">لقد استمتعت بلعب هذة اللعبة واحببت مشاركتها معك</string>
+    <string name="installmessenger">يرجى تثبيت تطبيق Facebook Messenger</string>
+    <string name="menu">قائمة</string>
+    <string name="ratemessage">لتقييم اللعبة سيتم فتح متجر Play</string>
+    <string name="ok">موافق</string>
+    <string name="cancle">إلغاء</string>
+    <string name="title_activity_settings">الاعدادات</string>
+    <string name="click_sound">صوت نقر الشاشة</string>
+    <string name="app_sound">أصوات التطبيق</string>
+    <string name="sound_level">مستوى صوت اللعبة</string>
+    <string name="vibrate">الاهتزاز</string>
+    <string name="about_content">لعبة العملة الوردية تم انشاء اللعبة في 12-2018, تم تطويرها بواسطة المطور : باهر فارع السقا,  \nEmail : baheralsaqa@gmail.com .
+        \n\n- اصدار اللعبة : هذا الاصدار الاول وبدعمكم نتقدم .
+        \n\n- مهام اللعبة : المهمة في اللعبة تجميع العملة بجميع اشكالها بتحريك الصندوق للأعلى وللأسفل عن طريق النقر المتواصل والافلات على الشاشة اثناء اللعب ,هناك عدة خيارات / انواع اللعب :
+        \n\n1- يمكنك لعب تحدى نفسك وفيها يجب تخطي اعلى نتيجة تم الحصول عليها رغم زيادة السرعة كل 20 ثانية أثناء اللعب وبهذا تحدي قوي.\n\n2-
+        يمكنك لعب الخيار الاول ( لعبة مستويات سهلة ) تضم 12 مستوى متفاوتة في الصعوبة يجب عليك الفوز في كل المستويات للتمكن من لعب الخيار الثاني ( لعبة مستويات متوسطة ).\n\n3-
+        سيتم فتح الخيار الثاني ( لعبة مستويات متوسطة ) بعد الانتهاء من الخيار الاول وسيتم فتح الخيار الثالث ( لعبة مستويات صعبة ) بعد الانتهاء من الخيار الثاني وهذا بعد اصدار الاصدار الثاني للعبة وهو مرتبط بدعمكم وتقييماتكم.
+        - يمكنك مشاركة اللعبة مع الاصدقاء عبر تطبيقات التواصل الاجتماعي .\n\n
+        - يمكنك تقييم التطبيق لدعمنا بانتشار وتحديث اللعبة .\n\n
+        - يمكنك تحديد الاعدادات التي تلبي احتياجاتك ورغباتك في اللعب .\n
+        \n- اللعبة مجانية وتحتوي على مجموعة من الاعلانات اهمها اعلانات بمكافأة وهي كلها اعلانات مستهدفة ومخصصة وهي مصدر الدخل لدينا .</string>
+    <string name="about_view_adv">إدعمنا بمشاهدة إعلان فيديو</string>
+    <string name="watch">مشاهدة</string>
+    <string name="home1">الرئيسية</string>
+    <string name="levels">المستويات</string>
+    <string name="result">النتيجة</string>
+    <string name="levelOne">المستوى الأول</string>
+    <string name="levelTwo">المستوى الثاني</string>
+    <string name="levelThree">المستوى الثالث</string>
+    <string name="levelFour">المستوى الرابع</string>
+    <string name="levelFive">المستوى الخامس</string>
+    <string name="levelSix">المستوى السادس</string>
+    <string name="levelSeven">المستوى السابع</string>
+    <string name="levelEight">المستوى الثامن</string>
+    <string name="levelNine">المستوى التاسع</string>
+    <string name="levelTen">المستوى العاشر</string>
+    <string name="levelEleven">المستوى الحادي عشر</string>
+    <string name="levelTwelve">المستوى الثاني عشر</string>
+    <string name="mainMenu_b1_1">ca-app-pub-1357552008801218/7378175220</string>
+    <string name="loss">لقد خسرت</string>
+    <string name="rewardcontent">يمكنك إكمال اللعب بمشاهدة إعلان بمكافأة</string>
+    <string name="spirits">الأرواح :</string>
+    <string name="reward">مكافأة</string>
+    <string name="alerter_message">لقد حصلت على روح إضافية يمكنك إكمال اللعب</string>
+    <string name="alerter_message_not_complete_ad">لم تُكمل مشاهدة الفيديو</string>
+    <string name="fantastic">هذا رائع</string>
+    <string name="about_alerter_message">شكرا لدعمك انتظرنا في الاصدار القادم</string>
+    <string name="good">هذا جيد</string>
+    <string name="about_not_complete_alerter_message">شكرا على اي حال ننتظر منك الافضل</string>
+    <string name="error_internet">تأكد من الاتصال بالانترنت</string>
+    <string name="unfortunately">للأسف</string>
+    <string name="error_try_again">هناك مشكلة, يرجى المحاولة مرة أخرى</string>
+    <string name="no_ad_inventory">هناك نقص في المخزون الإعلاني</string>
+    <string name="error_try_again_later">هناك مشكلة, يرجى المحاولة فيما بعد</string>
+    <string name="highScoreUp">لقد اجتزت النتيجة السابقة تهانينا, استمر ...</string>
+</resources>

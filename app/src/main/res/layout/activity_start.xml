@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".activities.Start">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/backanimation"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_gravity="center|top"
+            android:src="@drawable/back_animation" />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/backanimation1"
+            android:layout_width="430dp"
+            android:layout_height="240dp"
+            android:layout_gravity="center"
+            android:src="@drawable/back_animation"/>
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/backanimation2"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_gravity="center|bottom"
+            android:src="@drawable/back_animation" />
+
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-1357552008801218/7329501978">
+        </com.google.android.gms.ads.AdView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/paddingtop20">
+
+            <TextView
+                android:id="@+id/catchball"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/catchball"
+                android:textColor="@color/boldblue"
+                android:textSize="@dimen/numbersize"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margintop"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/pinkcoin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/marginstart2"
+                    android:text="@string/point20"
+                    android:textColor="@color/pink"
+                    android:textSize="@dimen/textsize"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margintop"
+                android:layout_marginEnd="@dimen/marginstart"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="RtlCompat">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/yellowcoin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/marginstart1"
+                    android:text="@string/point5"
+                    android:textColor="@color/yellow"
+                    android:textSize="@dimen/textsize"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margintop"
+                android:layout_marginEnd="@dimen/marginstart"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="RtlCompat">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bluecoin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/marginstart1"
+                    android:text="@string/point5"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/textsize"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margintop"
+                android:layout_marginBottom="@dimen/marginbottom"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="RtlCompat">
+
+                <ImageView
+                    android:layout_width="@dimen/bombimage"
+                    android:layout_height="@dimen/bombimage"
+                    android:src="@drawable/bomb" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/marginstart"
+                    android:text="@string/gameover"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textsize"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/challenge_yourself_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/paddingstartend"
+                android:layout_marginEnd="@dimen/paddingstartend"
+                android:layout_marginBottom="@dimen/marginbottom"
+                android:gravity="center"
+                android:text="@string/challenge_yourself_note"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/textsizesmall"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/margintop"
+                android:layout_marginStart="@dimen/marginstartend"
+                android:layout_marginEnd="@dimen/marginstartend">
+            <Button
+                android:id="@+id/startbtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/level_btn_selector"
+                android:text="@string/start"
+                android:paddingTop="@dimen/paddingtopbottom"
+                android:paddingBottom="@dimen/paddingtopbottom"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize"
+                android:layout_gravity="center" />
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/loading_spinner"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/loading_spinner"
+                    android:visibility="gone"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

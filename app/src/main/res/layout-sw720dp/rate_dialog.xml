@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_marginStart="@dimen/margintop"
+    android:layout_marginEnd="@dimen/margintop">
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-1357552008801218/4318882177"/>
+
+    <TextView
+        android:id="@+id/rate_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ratemessage"
+        android:textSize="@dimen/textsize20"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/marginbottom"
+        android:layout_marginTop="@dimen/margintop50" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="@dimen/width200"
+            android:layout_height="wrap_content"
+            android:text="@string/ok"
+            android:textAllCaps="false"
+            android:background="@drawable/ok_btn_selector"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/textsize20"
+            android:layout_marginEnd="@dimen/marginend"
+            tools:ignore="RtlCompat" />
+
+        <Button
+            android:id="@+id/cancle"
+            android:layout_width="@dimen/width130"
+            android:layout_height="wrap_content"
+            android:text="@string/cancle"
+            android:textAllCaps="false"
+            android:background="@drawable/btn_selector_logout"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/textsize20"
+            android:layout_toEndOf="@id/ok"
+            tools:ignore="RtlCompat" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.bahertech.firstgame.activities.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <TextView
+            android:id="@+id/titlescoreLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingStart="@dimen/marginstart1"
+            android:text="@string/score"
+            android:textColor="@color/boldblue"
+            android:textSize="@dimen/textsize20"
+            tools:ignore="RtlCompat"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/scoreLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/marginstart"
+            android:text="300"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/textsize20"
+            android:textStyle="bold"
+            tools:ignore="RtlCompat"
+            android:layout_toEndOf="@id/titlescoreLabel"/>
+
+        <TextView
+            android:id="@+id/slash"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/marginstart"
+            android:gravity="center"
+            android:text="/"
+            android:textColor="@color/boldblue"
+            android:textSize="@dimen/textsize20"
+            tools:ignore="RtlCompat"
+            android:layout_toEndOf="@id/scoreLabel"/>
+
+        <TextView
+            android:id="@+id/access_score"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/marginstart"
+            android:gravity="center"
+            android:text="500"
+            android:textColor="@color/boldblue"
+            android:textSize="@dimen/textsize20"
+            tools:ignore="RtlCompat"
+            android:layout_toEndOf="@id/slash"/>
+
+        <TextView
+            android:id="@+id/spirits_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/spirits"
+            android:gravity="center"
+            android:textColor="@color/boldblue"
+            android:textSize="@dimen/textsize20"
+            android:layout_toEndOf="@id/access_score"
+            android:layout_marginStart="@dimen/marginstart30"
+            tools:ignore="RtlCompat" />
+
+        <TextView
+            android:id="@+id/spirits"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="0"
+            android:gravity="center"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/textsize20"
+            android:textStyle="bold"
+            android:layout_toEndOf="@id/spirits_title"
+            android:layout_marginStart="@dimen/marginstart"
+            tools:ignore="RtlCompat" />
+
+        <CheckBox
+            android:id="@+id/playpause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/playpause_btn_selector_sw600"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/marginend"
+            tools:ignore="RtlCompat"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/startLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="130dp"
+                android:text="@string/tap_start"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/textsizebold40" />
+
+            <ImageView
+                android:id="@+id/moneyBox"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/ic_money_box" />
+
+            <ImageView
+                android:id="@+id/yellowcoin"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                app:srcCompat="@drawable/yellowcoin" />
+
+            <ImageView
+                android:id="@+id/bluecoin"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                app:srcCompat="@drawable/bluecoin" />
+
+            <ImageView
+                android:id="@+id/yellowcoin1"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                app:srcCompat="@drawable/yellowcoin" />
+
+            <ImageView
+                android:id="@+id/bluecoin1"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                app:srcCompat="@drawable/bluecoin" />
+
+            <ImageView
+                android:id="@+id/pinkcoin"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                app:srcCompat="@drawable/pinkcoin" />
+
+            <ImageView
+                android:id="@+id/bomb"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/bomb" />
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:id="@+id/levelup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="#92000000">
+
+            <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_alignParentTop="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-1357552008801218/5570709502">
+            </com.google.android.gms.ads.AdView>
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/levelupimage"
+                android:layout_width="350dp"
+                android:layout_height="330dp"
+                android:layout_below="@id/adView1"
+                android:layout_centerInParent="true"
+                android:src="@drawable/levelupimage1"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_below="@id/levelupimage"
+                android:layout_centerInParent="true"
+                android:layoutDirection="ltr">
+
+                <Button
+                    android:id="@+id/menu"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/level_btn_selector"
+                    android:drawableBottom="@drawable/ic_menugame"
+                    android:paddingBottom="13dp"
+                    android:layout_marginEnd="@dimen/marginend"
+                    tools:ignore="RtlCompat" />
+
+                <Button
+                    android:id="@+id/rerun"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/ok_btn_selector"
+                    android:drawableBottom="@drawable/ic_playagain"
+                    android:paddingBottom="13dp"
+                    android:layout_marginEnd="@dimen/marginend"
+                    tools:ignore="RtlCompat"/>
+
+                <Button
+                    android:id="@+id/next"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/next_btn_selector"
+                    android:drawableBottom="@drawable/ic_nextgame1"
+                    android:paddingBottom="13dp" />
+
+            </LinearLayout>
+            
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

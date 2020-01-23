@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/shareItem1"
+        android:title="@string/share_game"
+        android:icon="@drawable/ic_share"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/ratingItem2"
+        android:title="@string/game_rating"
+        android:icon="@drawable/ic_star"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/settingsItem33"
+        android:title="@string/menu"
+        android:icon="@drawable/ic_menu"
+        app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/settingsItem3"
+                android:title="@string/settings"
+                android:icon="@drawable/ic_settings"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/aboutItem4"
+                android:title="@string/about_game"
+                android:icon="@drawable/ic_about"
+                app:showAsAction="ifRoom"/>
+        </menu>
+    </item>
+</menu>

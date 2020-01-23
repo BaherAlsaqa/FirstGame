@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/shareItem1"
+        android:icon="@drawable/ic_share"
+        android:title="@string/share_game"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/ratingItem2"
+        android:icon="@drawable/ic_star"
+        android:title="@string/game_rating"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/aboutItem4"
+        android:icon="@drawable/ic_about1"
+        android:title="@string/about_game"
+        app:showAsAction="always" />
+</menu>

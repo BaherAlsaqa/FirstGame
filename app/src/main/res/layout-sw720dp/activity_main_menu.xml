@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".activities.MainMenuActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/backanimation"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_gravity="center|top"
+            android:src="@drawable/back_animation" />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/backanimation1"
+            android:layout_width="430dp"
+            android:layout_height="240dp"
+            android:layout_gravity="center"
+            android:src="@drawable/back_animation" />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/backanimation2"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_gravity="center|bottom"
+            android:src="@drawable/back_animation" />
+
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/mainMenu_b1_1">
+        </com.google.android.gms.ads.AdView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/challenge_yourself"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/marginend"
+                android:background="@drawable/btn_selector"
+                android:paddingStart="@dimen/paddingstartend"
+                android:paddingTop="@dimen/paddingtopbottom"
+                android:paddingEnd="@dimen/paddingstartend"
+                android:paddingBottom="@dimen/paddingtopbottom"
+                android:layout_marginStart="@dimen/marginstartend"
+                android:layout_marginEnd="@dimen/marginstartend"
+                android:text="@string/challenge_yourself"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize20" />
+
+            <Button
+                android:id="@+id/gamelevelseasy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/marginend"
+                android:background="@drawable/btn_selector_easy"
+                android:paddingStart="@dimen/paddingstartend"
+                android:paddingTop="@dimen/paddingtopbottom"
+                android:paddingEnd="@dimen/paddingstartend"
+                android:paddingBottom="@dimen/paddingtopbottom"
+                android:layout_marginStart="@dimen/marginstartend"
+                android:layout_marginEnd="@dimen/marginstartend"
+                android:text="@string/gamelevelseasy"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize20" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginstartend"
+                android:layout_marginEnd="@dimen/marginstartend">
+
+                <Button
+                    android:id="@+id/gamelevelsmedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/marginend"
+                    android:background="@drawable/btn_selector_medium"
+                    android:enabled="false"
+                    android:paddingStart="@dimen/paddingstartend"
+                    android:paddingTop="@dimen/paddingtopbottom"
+                    android:paddingEnd="@dimen/paddingstartend"
+                    android:paddingBottom="@dimen/paddingtopbottom"
+                    android:text="@string/gamelevelsmedium"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize20" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_marginStart="@dimen/marginstart"
+                    android:layout_marginBottom="@dimen/marginstart"
+                    app:srcCompat="@drawable/ic_lock"
+                    tools:ignore="RtlCompat" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginstartend"
+                android:layout_marginEnd="@dimen/marginstartend">
+
+                <Button
+                    android:id="@+id/gamelevelshard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/marginend"
+                    android:background="@drawable/btn_selector_hard"
+                    android:enabled="false"
+                    android:paddingStart="@dimen/paddingstartend"
+                    android:paddingTop="@dimen/paddingtopbottom"
+                    android:paddingEnd="@dimen/paddingstartend"
+                    android:paddingBottom="@dimen/paddingtopbottom"
+                    android:text="@string/gamelevelshard"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize20" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_marginStart="@dimen/marginstart"
+                    android:layout_marginBottom="@dimen/marginstart"
+                    app:srcCompat="@drawable/ic_lock"
+                    tools:ignore="RtlCompat" />
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/marginend"
+                android:background="@drawable/btn_selector_settings"
+                android:paddingStart="@dimen/paddingstartend"
+                android:paddingTop="@dimen/paddingtopbottom"
+                android:paddingEnd="@dimen/paddingstartend"
+                android:paddingBottom="@dimen/paddingtopbottom"
+                android:layout_marginStart="@dimen/marginstartend"
+                android:layout_marginEnd="@dimen/marginstartend"
+                android:text="@string/settings"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize20" />
+
+            <Button
+                android:id="@+id/logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/marginend"
+                android:background="@drawable/btn_selector_logout"
+                android:paddingStart="@dimen/paddingstartend"
+                android:paddingTop="@dimen/paddingtopbottom"
+                android:paddingEnd="@dimen/paddingstartend"
+                android:paddingBottom="@dimen/paddingtopbottom"
+                android:layout_marginStart="@dimen/marginstartend"
+                android:layout_marginEnd="@dimen/marginstartend"
+                android:text="@string/logout"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize20" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>
