@@ -2,15 +2,13 @@ package com.bahertech.firstgame.activities;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.bahertech.firstgame.R;
 
 import java.util.Locale;
-
-import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class SplashScreen extends AppCompatActivity {
 

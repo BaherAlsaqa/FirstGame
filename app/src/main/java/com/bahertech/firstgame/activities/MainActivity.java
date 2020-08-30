@@ -2,21 +2,18 @@ package com.bahertech.firstgame.activities;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -35,7 +32,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,18 +42,18 @@ import com.bahertech.firstgame.classes.ToastGenerate;
 import com.bahertech.firstgame.interfaces.Constants;
 import com.bahertech.firstgame.services.SoundService;
 import com.bahertech.firstgame.utils.AppSharedPreferences;
-import com.firebase.client.Firebase;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.tapadoo.alerter.Alerter;
 
 import java.util.Locale;
@@ -218,20 +214,20 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         firebase = new Firebase("https://pink-coin.firebaseio.com/" + Constants.DB_Firebase_Key);*/
 
         // Initialize Calss Mobile Ads
-        MobileAds.initialize(this, Constants.ID_App);
-
+//        MobileAds.initialize(this, Constants.ID_App);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
         // Interstitial Ads
         mInterstitialAd = new InterstitialAd(MainActivity.this);
         mInterstitialAd.setAdUnitId(Constants.Menu_Btn_b2_2);
         mInterstitialAd.loadAd(new AdRequest.Builder()
-                .addTestDevice(Constants.testDevice_SM_G530H)
-                
                 .build());
         mInterstitialAd1 = new InterstitialAd(MainActivity.this);
         mInterstitialAd1.setAdUnitId(Constants.End_Level_b2_4);
         mInterstitialAd1.loadAd(new AdRequest.Builder()
-                .addTestDevice(Constants.testDevice_SM_G530H)
-                
                 .build());
 
         // Use an activity context to get the rewarded video instance.
@@ -584,31 +580,30 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
     private void loadRewardedVideoAd() {
         mRewardedVideoAd.loadAd(Constants.resumeDialogRewardAd_b3_1,
                 new AdRequest.Builder()
-                        .addTestDevice(Constants.testDevice_SM_G530H)
-                        
                         .build());
     }
 
     private void loadRewardedVideoAd1() {
         mRewardedVideoAd1.loadAd(Constants.watch_Btn_RewardAd_b3_1,
                 new AdRequest.Builder()
-                        .addTestDevice(Constants.testDevice_SM_G530H)
-                        
                         .build());
     }
 
     public void viewButtons(final int play) {
 
         // Initialize Calss Mobile Ads
-        MobileAds.initialize(MainActivity.this, Constants.ID_App);
+//        MobileAds.initialize(MainActivity.this, Constants.ID_App);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
         // View Ads
         AdView adView = new AdView(MainActivity.this);
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(Constants.WinDialog_b1_8);
         adView = (AdView) findViewById(R.id.adView1);
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(Constants.testDevice_SM_G530H)
-                
                 .build();
         adView.loadAd(adRequest);
         adView.setAdListener(new AdListener() {
@@ -619,10 +614,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             }
 
             @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                Log.v(Constants.log + "ads", "onAdFailedToLoad = " + i);
-                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, i);
+            public void onAdFailedToLoad(LoadAdError adError) {
+                super.onAdFailedToLoad(adError);
+//                Log.v(Constants.log + "ads", "onAdFailedToLoad = " + adError.getCode());
+//                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, adError.getCode());
             }
 
             @Override
@@ -691,10 +686,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                             }
 
                             @Override
-                            public void onAdFailedToLoad(int i) {
-                                super.onAdFailedToLoad(i);
-                                Log.v(Constants.log + "132", "onAdFailedToLoad = " + i);
-                                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, i);
+                            public void onAdFailedToLoad(LoadAdError adError) {
+                                super.onAdFailedToLoad(adError);
+//                                Log.v(Constants.log + "132", "onAdFailedToLoad = " + i);
+                                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, adError.getCode());
                                 startActivity(new Intent(MainActivity.this, MainMenuActivity.class)
                                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                             }
@@ -726,10 +721,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                             }
 
                             @Override
-                            public void onAdFailedToLoad(int i) {
-                                super.onAdFailedToLoad(i);
-                                Log.v(Constants.log + "132", "onAdFailedToLoad = " + i);
-                                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, i);
+                            public void onAdFailedToLoad(LoadAdError adError) {
+                                super.onAdFailedToLoad(adError);
+//                                Log.v(Constants.log + "132", "onAdFailedToLoad = " + i);
+                                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, adError.getCode());
                                 startActivity(new Intent(MainActivity.this, Levels.class)
                                         .putExtra(Constants.activitykey, "pinkoin")
                                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -789,10 +784,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                             }
 
                             @Override
-                            public void onAdFailedToLoad(int i) {
-                                super.onAdFailedToLoad(i);
-                                Log.v(Constants.log + "132", "onAdFailedToLoad = " + i);
-                                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, i);
+                            public void onAdFailedToLoad(LoadAdError adError) {
+                                super.onAdFailedToLoad(adError);
+//                                Log.v(Constants.log + "132", "onAdFailedToLoad = " + i);
+                                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, adError.getCode());
                             }
 
                             @Override
@@ -1218,15 +1213,18 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         // Initialize Calss Mobile Ads
-        MobileAds.initialize(context, Constants.ID_App);
+//        MobileAds.initialize(context, Constants.ID_App);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
         // View Ads
         AdView adView = new AdView(context);
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(Constants.About_b1_9);
         adView = dialog1.findViewById(R.id.adView1);
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(Constants.testDevice_SM_G530H)
-                
                 .build();
         adView.loadAd(adRequest);
         adView.setAdListener(new AdListener() {
@@ -1237,10 +1235,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             }
 
             @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                Log.v(Constants.log + "ads", "onAdFailedToLoad = " + i);
-                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, i);
+            public void onAdFailedToLoad(LoadAdError adError) {
+                super.onAdFailedToLoad(adError);
+                Log.v(Constants.log + "ads", "onAdFailedToLoad = " + adError.getCode());
+//                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, adError.getCode());
             }
 
             @Override
@@ -1397,15 +1395,18 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
         dialog1.setContentView(R.layout.playpause_dialog);
 
         // Initialize Calss Mobile Ads
-        MobileAds.initialize(this, Constants.ID_App);
+//        MobileAds.initialize(this, Constants.ID_App);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
         // View Ads
         AdView adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(Constants.PlayPause_b1_7);
         adView = dialog1.findViewById(R.id.adView1);
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(Constants.testDevice_SM_G530H)
-                
                 .build();
         adView.loadAd(adRequest);
         adView.setAdListener(new AdListener() {
@@ -1416,10 +1417,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
             }
 
             @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                Log.v(Constants.log + "ads", "onAdFailedToLoad = " + i);
-                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, i);
+            public void onAdFailedToLoad(LoadAdError adError) {
+                super.onAdFailedToLoad(adError);
+                Log.v(Constants.log + "ads", "onAdFailedToLoad = " + adError.getCode());
+//                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, adError.getCode());
             }
 
             @Override
@@ -1463,10 +1464,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                             }
 
                             @Override
-                            public void onAdFailedToLoad(int i) {
-                                super.onAdFailedToLoad(i);
-                                Log.v(Constants.log + "132", "onAdFailedToLoad = " + i);
-                                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, i);
+                            public void onAdFailedToLoad(LoadAdError adError) {
+                                super.onAdFailedToLoad(adError);
+                                Log.v(Constants.log + "132", "onAdFailedToLoad = " + adError.getCode());
+                                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, adError.getCode());
                                 startActivity(new Intent(MainActivity.this, MainMenuActivity.class)
                                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                             }
@@ -1497,10 +1498,10 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
                             }
 
                             @Override
-                            public void onAdFailedToLoad(int i) {
-                                super.onAdFailedToLoad(i);
-                                Log.v(Constants.log + "132", "onAdFailedToLoad = " + i);
-                                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, i);
+                            public void onAdFailedToLoad(LoadAdError adError) {
+                                super.onAdFailedToLoad(adError);
+                                Log.v(Constants.log + "132", "onAdFailedToLoad = " + adError.getCode());
+//                                new MainMenuActivity().onAdFailedToLoadErrorsCodes(MainActivity.this, adError.getCode());
                                 startActivity(new Intent(MainActivity.this, Levels.class)
                                         .putExtra(Constants.activitykey, "pinkoin")
                                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));

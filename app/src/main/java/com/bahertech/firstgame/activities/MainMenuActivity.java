@@ -10,7 +10,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -34,17 +34,18 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.tapadoo.alerter.Alerter;
 
-import java.util.IllegalFormatCodePointException;
 import java.util.Locale;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
@@ -104,8 +105,12 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
         Log.d(Constants.log+"token", "Instance Id Token : "+FirebaseToken);
 
         // Initialize Calss Mobile Ads
-        MobileAds.initialize(this, Constants.ID_App);
-
+//        MobileAds.initialize(this, Constants.ID_App);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
         // Use an activity context to get the rewarded video instance.
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(MainMenuActivity.this);
         mRewardedVideoAd.setRewardedVideoAdListener(MainMenuActivity.this);
@@ -116,8 +121,6 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
         adView.setAdUnitId(Constants.MainManu_b1_1);
         adView = (AdView) findViewById(R.id.adView1);
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(Constants.testDevice_SM_G530H)
-                
                 .build();
         adView.loadAd(adRequest);
         adView.setAdListener(new AdListener(){
@@ -127,10 +130,10 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
                 Log.v(Constants.log + "ads", "onAdLoaded");
             }
             @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                Log.v(Constants.log+"ads", "onAdFailedToLoad = "+i);
-                onAdFailedToLoadErrorsCodes(MainMenuActivity.this, i);
+            public void onAdFailedToLoad(LoadAdError adError) {
+                super.onAdFailedToLoad(adError);
+                Log.v(Constants.log+"ads", "onAdFailedToLoad = "+adError.getCode());
+//                onAdFailedToLoadErrorsCodes(MainMenuActivity.this, adError.getCode());
             }
             @Override
             public void onAdClosed() {
@@ -235,8 +238,6 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
 
         mRewardedVideoAd.loadAd(Constants.watch_Btn_RewardAd_b3_1,
                 new AdRequest.Builder()
-                        .addTestDevice(Constants.testDevice_SM_G530H)
-                
                         .build());
     }
 
@@ -312,15 +313,18 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
         dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         // Initialize Calss Mobile Ads
-        MobileAds.initialize(context, Constants.ID_App);
+//        MobileAds.initialize(context, Constants.ID_App);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
         // View Ads
         AdView adView = new AdView(context);
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(Constants.Rate_b1_6);
         adView = dialog2.findViewById(R.id.adView1);
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(Constants.testDevice_SM_G530H)
-                
                 .build();
         adView.loadAd(adRequest);
         adView.setAdListener(new AdListener(){
@@ -330,10 +334,10 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
                 Log.v(Constants.log + "ads", "onAdLoaded");
             }
             @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                Log.v(Constants.log+"ads", "onAdFailedToLoad = "+i);
-                onAdFailedToLoadErrorsCodes(MainMenuActivity.this, i);
+            public void onAdFailedToLoad(LoadAdError adError) {
+                super.onAdFailedToLoad(adError);
+                Log.v(Constants.log+"ads", "onAdFailedToLoad = "+adError.getCode());
+//                onAdFailedToLoadErrorsCodes(MainMenuActivity.this, adError.getCode());
             }
             @Override
             public void onAdClosed() {
@@ -397,15 +401,18 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
         dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         // Initialize Calss Mobile Ads
-        MobileAds.initialize(context, Constants.ID_App);
+//        MobileAds.initialize(context, Constants.ID_App);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
         // View Ads
         AdView adView = new AdView(context);
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(Constants.About_b1_9);
         adView = dialog1.findViewById(R.id.adView1);
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(Constants.testDevice_SM_G530H)
-                
                 .build();
         adView.loadAd(adRequest);
         adView.setAdListener(new AdListener(){
@@ -415,10 +422,10 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
                 Log.v(Constants.log + "ads", "onAdLoaded");
             }
             @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                Log.v(Constants.log+"ads", "onAdFailedToLoad = "+i);
-                onAdFailedToLoadErrorsCodes(MainMenuActivity.this, i);
+            public void onAdFailedToLoad(LoadAdError adError) {
+                super.onAdFailedToLoad(adError);
+                Log.v(Constants.log+"ads", "onAdFailedToLoad = "+adError.getCode());
+//                onAdFailedToLoadErrorsCodes(MainMenuActivity.this, adError.getCode());
             }
             @Override
             public void onAdClosed() {
