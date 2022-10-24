@@ -28,7 +28,7 @@ public class SoundService extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.v(Constants.log+"s", "start service");
-        Boolean appSound = appSharedPreferences.readBoolean(Constants.appSound);
+        boolean appSound = appSharedPreferences.readBoolean(Constants.appSound);
         String volume = appSharedPreferences.readString(Constants.volumeLevel);
         float volumeF = Float.parseFloat(volume);
         if (appSound) {
@@ -52,7 +52,7 @@ public class SoundService extends Service {
     }
 
     public void onDestroy() {
-        Boolean appSound = appSharedPreferences.readBoolean(Constants.appSound);
+        boolean appSound = appSharedPreferences.readBoolean(Constants.appSound);
         if (appSound) {
             player.stop();
             player.release();

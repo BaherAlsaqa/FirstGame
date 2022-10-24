@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -28,25 +30,30 @@ import com.bahertech.firstgame.classes.SoundPlayer;
 import com.bahertech.firstgame.interfaces.Constants;
 import com.bahertech.firstgame.services.SoundService;
 import com.bahertech.firstgame.utils.AppSharedPreferences;
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.ads.reward.RewardItem;
-import com.google.android.gms.ads.reward.RewardedVideoAd;
-import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.google.android.gms.ads.rewarded.ServerSideVerificationOptions;
 import com.tapadoo.alerter.Alerter;
 
 import java.util.Locale;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-public class Start extends AppCompatActivity implements RewardedVideoAdListener {
+public class Start extends AppCompatActivity{
 
     private Button startBtn;
     private TextView challenge_yourself_note;
@@ -55,7 +62,8 @@ public class Start extends AppCompatActivity implements RewardedVideoAdListener 
     private SoundPlayer soundPlayer;
     private AppSharedPreferences appSharedPreferences;
     // Rewarded Video Ads
-    private RewardedVideoAd mRewardedVideoAd;
+    private RewardedAd mRewardedAd;
+    private final String TAG = "Tag Start";
 
     //Change Font
     private Calligrapher calligrapher;
@@ -98,23 +106,34 @@ public class Start extends AppCompatActivity implements RewardedVideoAdListener 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
+                // Interstitial Ads
+                AdRequest adRequest = new AdRequest.Builder().build();
+                Log.d(TAG,"Constants.StartGame_b2_1 >> "+Constants.StartGame_b2_1);
+                InterstitialAd.load(getApplicationContext(),Constants.StartGame_b2_1, adRequest,
+                        new InterstitialAdLoadCallback() {
+                            @Override
+                            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                                // The mInterstitialAd reference will be null until
+                                // an ad is loaded.
+                                mInterstitialAd = interstitialAd;
+                                Log.i(TAG, "mInterstitialAd onAdLoaded InterstitialAdLoadCallback");
+                            }
+
+                            @Override
+                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                                // Handle the error
+                                Log.d(TAG, "mInterstitialAd onAdFailedToLoad >> "+loadAdError);
+                                mInterstitialAd = null;
+                            }
+                        });
             }
         });
-        // Use an activity context to get the rewarded video instance.
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(Start.this);
-        mRewardedVideoAd.setRewardedVideoAdListener(Start.this);
-        loadRewardedVideoAd();
 
-        // Interstitial Ads
-        mInterstitialAd = new InterstitialAd(Start.this);
-        mInterstitialAd.setAdUnitId(Constants.StartGame_b2_1);
-        mInterstitialAd.loadAd(new AdRequest.Builder()
-                .build());
 
         //TODO //////////////loading /////////////////////////
 
-        startBtn.setText("");
-        startBtn.setEnabled(false);
+        startBtn.setText(getString(R.string.start));
+        startBtn.setEnabled(true);
         loadingSpinner.setVisibility(View.VISIBLE);
 
         handler = new Handler();
@@ -123,8 +142,7 @@ public class Start extends AppCompatActivity implements RewardedVideoAdListener 
 
             public void run() {
                 if (killMe) {
-
-                    if (mInterstitialAd.isLoaded()) {
+                    if (mInterstitialAd != null) {
                         killMe = false;
                         startBtn.setText(getString(R.string.start));
                         startBtn.setEnabled(true);
@@ -211,34 +229,52 @@ public class Start extends AppCompatActivity implements RewardedVideoAdListener 
                     }
 
                     // Show Interstitial Ads
-                    if (mInterstitialAd.isLoaded()) {
-                        mInterstitialAd.show();
+                    if (mInterstitialAd != null) {
+                        mInterstitialAd.show(Start.this);
+                        startActivity(new Intent(Start.this, MainActivity.class)
+                                .putExtra(Constants.levelValue, levelValue)
+                                .putExtra(Constants.activitykey, Constants.activitykey));
                         Log.d(Constants.log + "131", "mInterstitialAd.show.");
                     } else {
                         Log.d(Constants.log + "131", "The interstitial wasn't loaded yet.");
+                        startActivity(new Intent(Start.this, MainActivity.class)
+                                .putExtra(Constants.levelValue, levelValue)
+                                .putExtra(Constants.activitykey, Constants.activitykey));
                     }
-
-                    mInterstitialAd.setAdListener(new AdListener() {
+                    if(mInterstitialAd != null)
+                    mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
                         @Override
-                        public void onAdLoaded() {
-                            super.onAdLoaded();
-                            Log.d(Constants.log + "131", "onAdLoaded");
+                        public void onAdClicked() {
+                            // Called when a click is recorded for an ad.
+                            Log.d(TAG, "Ad was clicked.");
                         }
 
                         @Override
-                        public void onAdFailedToLoad(LoadAdError adError) {
-                            super.onAdFailedToLoad(adError);
-                            Log.d(Constants.log + "131", "onAdFailedToLoad = "+adError.getCode());
-                            new MainMenuActivity().onAdFailedToLoadErrorsCodes(Start.this, adError.getCode());
+                        public void onAdDismissedFullScreenContent() {
+                            // Called when ad is dismissed.
+                            // Set the ad reference to null so you don't show the ad a second time.
+                            Log.d(TAG, "Ad dismissed fullscreen content.");
+                            mInterstitialAd = null;
                         }
 
                         @Override
-                        public void onAdClosed() {
-                            super.onAdClosed();
-                            Log.d(Constants.log + "131", "onAdClosed");
-                            startActivity(new Intent(Start.this, MainActivity.class)
-                                    .putExtra(Constants.levelValue, levelValue)
-                                    .putExtra(Constants.activitykey, Constants.activitykey));
+                        public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                            // Called when ad fails to show.
+                            Log.e(TAG, "Ad failed to show fullscreen content."+"<< adError >>"+adError.getCode());
+                            mInterstitialAd = null;
+//                            new MainMenuActivity().onAdFailedToLoadErrorsCodes(Start.this, adError.getCode());
+                        }
+
+                        @Override
+                        public void onAdImpression() {
+                            // Called when an impression is recorded for an ad.
+                            Log.d(TAG, "Ad recorded an impression.");
+                        }
+
+                        @Override
+                        public void onAdShowedFullScreenContent() {
+                            // Called when ad is shown.
+                            Log.d(TAG, "Ad showed fullscreen content.");
                         }
                     });
                 }
@@ -256,38 +292,98 @@ public class Start extends AppCompatActivity implements RewardedVideoAdListener 
                     }
 
                     // Show Interstitial Ads
-                    if (mInterstitialAd.isLoaded()) {
-                        mInterstitialAd.show();
+                    if (mInterstitialAd != null) {
+                        mInterstitialAd.show(Start.this);
                         Log.d(Constants.log + "131", "mInterstitialAd.show.");
+                        startActivity(new Intent(Start.this, MainActivity.class)
+                                .putExtra(Constants.activitykey, Constants.activitykey));
                     } else {
                         Log.d(Constants.log + "131", "The interstitial wasn't loaded yet.");
+                        startActivity(new Intent(Start.this, MainActivity.class)
+                                .putExtra(Constants.activitykey, Constants.activitykey));
                     }
-
-                    mInterstitialAd.setAdListener(new AdListener() {
+                    if(mInterstitialAd != null)
+                    mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
                         @Override
-                        public void onAdLoaded() {
-                            super.onAdLoaded();
-                            Log.d(Constants.log + "131", "onAdLoaded");
+                        public void onAdClicked() {
+                            // Called when a click is recorded for an ad.
+                            Log.d(TAG, "Ad was clicked.");
                         }
 
                         @Override
-                        public void onAdFailedToLoad(LoadAdError adError) {
-                            super.onAdFailedToLoad(adError);
-                            Log.d(Constants.log + "131", "onAdFailedToLoad = "+adError.getCode());
-                            new MainMenuActivity().onAdFailedToLoadErrorsCodes(Start.this, adError.getCode());
+                        public void onAdDismissedFullScreenContent() {
+                            // Called when ad is dismissed.
+                            // Set the ad reference to null so you don't show the ad a second time.
+                            Log.d(TAG, "Ad dismissed fullscreen content.");
+                            mInterstitialAd = null;
                         }
 
                         @Override
-                        public void onAdClosed() {
-                            super.onAdClosed();
-                            Log.d(Constants.log + "131", "onAdClosed");
-                            startActivity(new Intent(Start.this, MainActivity.class)
-                                    .putExtra(Constants.activitykey, Constants.activitykey));
+                        public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                            // Called when ad fails to show.
+                            Log.e(TAG, "Ad failed to show fullscreen content.");
+                            mInterstitialAd = null;
+//                            new MainMenuActivity().onAdFailedToLoadErrorsCodes(Start.this, adError.getCode());
+                        }
+
+                        @Override
+                        public void onAdImpression() {
+                            // Called when an impression is recorded for an ad.
+                            Log.d(TAG, "Ad recorded an impression.");
+                        }
+
+                        @Override
+                        public void onAdShowedFullScreenContent() {
+                            // Called when ad is shown.
+                            Log.d(TAG, "Ad showed fullscreen content.");
                         }
                     });
                 }
             });
         }
+        if(mRewardedAd != null)
+        mRewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+            @Override
+            public void onAdClicked() {
+                // Called when a click is recorded for an ad.
+                Log.d(TAG, "Ad was clicked.");
+            }
+
+            @Override
+            public void onAdDismissedFullScreenContent() {
+                // Called when ad is dismissed.
+                // Set the ad reference to null so you don't show the ad a second time.
+                Log.d(TAG, "Ad dismissed fullscreen content.");
+                mRewardedAd = null;
+                if (start_reward) {
+                    alerter(getString(R.string.fantastic), getString(R.string.about_alerter_message), Start.this, 1);
+                }else{
+                    alerter(getString(R.string.good), getString(R.string.about_not_complete_alerter_message), Start.this, 0);
+                }
+            }
+
+            @Override
+            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                // Called when ad fails to show.
+                Log.e(TAG, "Ad failed to show fullscreen content.");
+                mRewardedAd = null;
+//                new MainMenuActivity().onAdFailedToLoadErrorsCodes(Start.this, adError.getCode());
+            }
+
+            @Override
+            public void onAdImpression() {
+                // Called when an impression is recorded for an ad.
+                Log.d(TAG, "Ad recorded an impression.");
+                start_reward = true;
+                loadRewardedVideoAd();
+            }
+
+            @Override
+            public void onAdShowedFullScreenContent() {
+                // Called when ad is shown.
+                Log.d(TAG, "Ad showed fullscreen content.");
+            }
+        });
 
     }
 
@@ -410,9 +506,20 @@ public class Start extends AppCompatActivity implements RewardedVideoAdListener 
         watch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mRewardedVideoAd.isLoaded()) {
-                    Log.v(Constants.log + "232", "Main Menu Activity mRewardedVideoAd.isLoaded()");
-                    mRewardedVideoAd.show();
+                if (mRewardedAd != null) {
+                    Activity activityContext = Start.this;
+                    mRewardedAd.show(activityContext, new OnUserEarnedRewardListener() {
+                        @Override
+                        public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                            // Handle the reward.
+                            Log.d(TAG, "The user earned the reward.");
+                            Log.v(Constants.log + "232", "Main Menu Activity mRewardedVideoAd.isLoaded()");
+                            int rewardAmount = rewardItem.getAmount();
+                            String rewardType = rewardItem.getType();
+                        }
+                    });
+                } else {
+                    Log.d(TAG, "The rewarded ad wasn't ready yet.");
                 }
             }
         });
@@ -422,9 +529,31 @@ public class Start extends AppCompatActivity implements RewardedVideoAdListener 
     // TODO //////////////////// loadRewardedVideoAd ////////////////
     private void loadRewardedVideoAd() {
 
-        mRewardedVideoAd.loadAd(Constants.watch_Btn_RewardAd_b3_1,
+        /*mRewardedVideoAd.loadAd(Constants.watch_Btn_RewardAd_b3_1,
                 new AdRequest.Builder()
-                        .build());
+                        .build());*/
+        AdRequest adRequest = new AdRequest.Builder().build();
+        RewardedAd.load(this, Constants.watch_Btn_RewardAd_b3_1,
+                adRequest, new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error.
+                        Log.d(TAG, loadAdError.toString());
+
+                        mRewardedAd = null;
+                    }
+
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                        mRewardedAd = rewardedAd;
+                        ServerSideVerificationOptions options = new ServerSideVerificationOptions
+                                .Builder()
+                                .setCustomData("SAMPLE_CUSTOM_DATA_STRING")
+                                .build();
+                        mRewardedAd.setServerSideVerificationOptions(options);
+                        Log.d(TAG, "Ad was loaded.");
+                    }
+                });
     }
 
     @Override
@@ -462,6 +591,8 @@ public class Start extends AppCompatActivity implements RewardedVideoAdListener 
                 break;
             case R.id.aboutItem4:
                 about_dialog(Start.this);
+                // Use an activity context to get the rewarded video instance.
+                loadRewardedVideoAd();
                 break;
         }
 
@@ -469,67 +600,9 @@ public class Start extends AppCompatActivity implements RewardedVideoAdListener 
     }
 
     @Override
-    public void onResume() {
-        mRewardedVideoAd.resume(this);
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        mRewardedVideoAd.pause(this);
-        super.onPause();
-    }
-
-    @Override
     public void onDestroy() {
         handler.removeCallbacks(runnable);
-        mRewardedVideoAd.destroy(this);
         super.onDestroy();
-    }
-
-    @Override
-    public void onRewardedVideoAdLoaded() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdOpened() {
-
-    }
-
-    @Override
-    public void onRewardedVideoStarted() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdClosed() {
-        loadRewardedVideoAd();
-        if (start_reward == true) {
-            alerter(getString(R.string.fantastic), getString(R.string.about_alerter_message), Start.this, 1);
-        }else{
-            alerter(getString(R.string.good), getString(R.string.about_not_complete_alerter_message), Start.this, 0);
-        }
-    }
-
-    @Override
-    public void onRewarded(RewardItem rewardItem) {
-        start_reward = true;
-    }
-
-    @Override
-    public void onRewardedVideoAdLeftApplication() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdFailedToLoad(int i) {
-        new MainMenuActivity().onAdFailedToLoadErrorsCodes(Start.this, i);
-    }
-
-    @Override
-    public void onRewardedVideoCompleted() {
-
     }
 
     private void alerter(String title, String message, Context context, int soundPlay) {

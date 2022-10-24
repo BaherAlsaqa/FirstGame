@@ -9,6 +9,8 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,24 +36,28 @@ import com.bahertech.firstgame.classes.SoundPlayer;
 import com.bahertech.firstgame.interfaces.Constants;
 import com.bahertech.firstgame.services.SoundService;
 import com.bahertech.firstgame.utils.AppSharedPreferences;
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.ads.reward.RewardItem;
-import com.google.android.gms.ads.reward.RewardedVideoAd;
-import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.google.android.gms.ads.rewarded.ServerSideVerificationOptions;
 import com.tapadoo.alerter.Alerter;
 
 import java.util.Locale;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-public class Settings extends AppCompatActivity implements RewardedVideoAdListener {
+public class Settings extends AppCompatActivity {
 
     private RelativeLayout rlAppSound, rlBoxSound, rlSoundLevel, rlVibrate;
     private TextView appSoundText, boxSoundText, soundLevelText, vibrateText;
@@ -67,7 +73,8 @@ public class Settings extends AppCompatActivity implements RewardedVideoAdListen
     // Change Font
     private Calligrapher calligrapher;
     // Rewarded Video Ads
-    private RewardedVideoAd mRewardedVideoAd;
+    private RewardedAd mRewardedAd;
+    private final String TAG = "Settings";
 
     private boolean start_reward = false;
 
@@ -97,8 +104,6 @@ public class Settings extends AppCompatActivity implements RewardedVideoAdListen
             }
         });
         // Use an activity context to get the rewarded video instance.
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(Settings.this);
-        mRewardedVideoAd.setRewardedVideoAdListener(Settings.this);
         loadRewardedVideoAd();
         // View Ads
         AdView adView = new AdView(this);
@@ -118,7 +123,7 @@ public class Settings extends AppCompatActivity implements RewardedVideoAdListen
             public void onAdFailedToLoad(LoadAdError adError) {
                 super.onAdFailedToLoad(adError);
                 Log.v(Constants.log+"ads", "onAdFailedToLoad = "+adError.getCode());
-                new MainMenuActivity().onAdFailedToLoadErrorsCodes(Settings.this, adError.getCode());
+//                new MainMenuActivity().onAdFailedToLoadErrorsCodes(Settings.this, adError.getCode());
             }
             @Override
             public void onAdClosed() {
@@ -360,6 +365,50 @@ public class Settings extends AppCompatActivity implements RewardedVideoAdListen
             }
         });
 
+        if(mRewardedAd != null)
+            mRewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+            @Override
+            public void onAdClicked() {
+                // Called when a click is recorded for an ad.
+                Log.d(TAG, "Ad was clicked.");
+            }
+
+            @Override
+            public void onAdDismissedFullScreenContent() {
+                // Called when ad is dismissed.
+                // Set the ad reference to null so you don't show the ad a second time.
+                Log.d(TAG, "Ad dismissed fullscreen content.");
+                mRewardedAd = null;
+                if (start_reward) {
+                    alerter(getString(R.string.fantastic), getString(R.string.about_alerter_message), Settings.this, 1);
+                }else{
+                    alerter(getString(R.string.good), getString(R.string.about_not_complete_alerter_message), Settings.this, 0);
+                }
+            }
+
+            @Override
+            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                // Called when ad fails to show.
+                Log.e(TAG, "Ad failed to show fullscreen content.");
+                mRewardedAd = null;
+//                new MainMenuActivity().onAdFailedToLoadErrorsCodes(Settings.this, adError.getCode());
+            }
+
+            @Override
+            public void onAdImpression() {
+                // Called when an impression is recorded for an ad.
+                Log.d(TAG, "Ad recorded an impression.");
+                start_reward = true;
+                loadRewardedVideoAd();
+            }
+
+            @Override
+            public void onAdShowedFullScreenContent() {
+                // Called when ad is shown.
+                Log.d(TAG, "Ad showed fullscreen content.");
+            }
+        });
+
     }
 
     public void about_dialog(final Context context) {
@@ -450,9 +499,20 @@ public class Settings extends AppCompatActivity implements RewardedVideoAdListen
         watch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mRewardedVideoAd.isLoaded()) {
-                    Log.v(Constants.log + "232", "Main Menu Activity mRewardedVideoAd.isLoaded()");
-                    mRewardedVideoAd.show();
+                if (mRewardedAd != null) {
+                    Activity activityContext = Settings.this;
+                    mRewardedAd.show(activityContext, new OnUserEarnedRewardListener() {
+                        @Override
+                        public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                            // Handle the reward.
+                            Log.d(TAG, "The user earned the reward.");
+                            Log.v(Constants.log + "232", "Main Menu Activity mRewardedVideoAd.isLoaded()");
+                            int rewardAmount = rewardItem.getAmount();
+                            String rewardType = rewardItem.getType();
+                        }
+                    });
+                } else {
+                    Log.d(TAG, "The rewarded ad wasn't ready yet.");
                 }
             }
         });
@@ -462,9 +522,28 @@ public class Settings extends AppCompatActivity implements RewardedVideoAdListen
     // TODO //////////////////// loadRewardedVideoAd ////////////////
     private void loadRewardedVideoAd() {
 
-        mRewardedVideoAd.loadAd(Constants.watch_Btn_RewardAd_b3_1,
-                new AdRequest.Builder()
-                        .build());
+        AdRequest adRequest = new AdRequest.Builder().build();
+        RewardedAd.load(this, Constants.watch_Btn_RewardAd_b3_1,
+                adRequest, new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error.
+                        Log.d(TAG, loadAdError.toString());
+
+                        mRewardedAd = null;
+                    }
+
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                        mRewardedAd = rewardedAd;
+                        ServerSideVerificationOptions options = new ServerSideVerificationOptions
+                                .Builder()
+                                .setCustomData("SAMPLE_CUSTOM_DATA_STRING")
+                                .build();
+                        mRewardedAd.setServerSideVerificationOptions(options);
+                        Log.d(TAG, "Ad was loaded.");
+                    }
+                });
     }
 
     @Override
@@ -506,71 +585,6 @@ public class Settings extends AppCompatActivity implements RewardedVideoAdListen
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onResume() {
-        mRewardedVideoAd.resume(this);
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        mRewardedVideoAd.pause(this);
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        mRewardedVideoAd.destroy(this);
-        super.onDestroy();
-    }
-
-    @Override
-    public void onRewardedVideoAdLoaded() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdOpened() {
-
-    }
-
-    @Override
-    public void onRewardedVideoStarted() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdClosed() {
-        loadRewardedVideoAd();
-        if (start_reward == true) {
-            alerter(getString(R.string.fantastic), getString(R.string.about_alerter_message), Settings.this, 1);
-        }else{
-            alerter(getString(R.string.good), getString(R.string.about_not_complete_alerter_message), Settings.this, 0);
-        }
-    }
-
-    @Override
-    public void onRewarded(RewardItem rewardItem) {
-        start_reward = true;
-    }
-
-    @Override
-    public void onRewardedVideoAdLeftApplication() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdFailedToLoad(int i) {
-
-        new MainMenuActivity().onAdFailedToLoadErrorsCodes(Settings.this, i);
-
-    }
-
-    @Override
-    public void onRewardedVideoCompleted() {
-
     }
 
     private void alerter(String title, String message, Context context, int soundPlay) {

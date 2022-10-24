@@ -10,6 +10,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -25,32 +27,40 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bahertech.firstgame.BuildConfig;
 import com.bahertech.firstgame.R;
 import com.bahertech.firstgame.classes.SoundPlayer;
 import com.bahertech.firstgame.interfaces.Constants;
 import com.bahertech.firstgame.services.SoundService;
 import com.bahertech.firstgame.utils.AppSharedPreferences;
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.ads.reward.RewardItem;
-import com.google.android.gms.ads.reward.RewardedVideoAd;
-import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.google.android.gms.ads.rewarded.ServerSideVerificationOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.tapadoo.alerter.Alerter;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-public class MainMenuActivity extends AppCompatActivity implements RewardedVideoAdListener {
+public class MainMenuActivity extends AppCompatActivity  {
 
     private Button challengeYourself;
     private Button gameLevelsEasy;
@@ -64,7 +74,8 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
     private Calligrapher calligrapher;
     private Boolean appSound;
     // Rewarded Video Ads
-    private RewardedVideoAd mRewardedVideoAd;
+    private RewardedAd mRewardedAd;
+    private final String TAG = "MainMenuActivity";
 
     private boolean start_reward = false;
 
@@ -86,7 +97,6 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-
         // Initialize Calsses
         // Change Font
         calligrapher = new Calligrapher(this);
@@ -96,13 +106,13 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
 
         //Create Firebase Token
         FirebaseMessaging.getInstance().subscribeToTopic(Constants.DB_Firebase_Key);
-        FirebaseInstanceId.getInstance().getToken();
+//        FirebaseInstanceId.getInstance().getToken();
 
-        String FirebaseToken = FirebaseInstanceId.getInstance().getToken();
+//        String FirebaseToken = FirebaseInstanceId.getInstance().getToken();
 
-        appSharedPreferences.writeString(Constants.Firebase_Token, FirebaseToken);
+//        appSharedPreferences.writeString(Constants.Firebase_Token, FirebaseToken);
 
-        Log.d(Constants.log+"token", "Instance Id Token : "+FirebaseToken);
+//        Log.d(Constants.log+"token", "Instance Id Token : "+FirebaseToken);
 
         // Initialize Calss Mobile Ads
 //        MobileAds.initialize(this, Constants.ID_App);
@@ -111,9 +121,12 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
+        List<String> testDeviceIds = Collections.singletonList(Constants.testDevice_mi8_light);
+        RequestConfiguration configuration =
+                new RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build();
+        MobileAds.setRequestConfiguration(configuration);
+        Log.d(TAG, BuildConfig.DEBUG+"");
         // Use an activity context to get the rewarded video instance.
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(MainMenuActivity.this);
-        mRewardedVideoAd.setRewardedVideoAdListener(MainMenuActivity.this);
         loadRewardedVideoAd();
         // View Ads
         AdView adView = new AdView(this);
@@ -231,14 +244,75 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
                 startActivity(a);
             }
         });
+        if(mRewardedAd != null)
+            mRewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+            @Override
+            public void onAdClicked() {
+                // Called when a click is recorded for an ad.
+                Log.d(TAG, "Ad was clicked.");
+            }
+
+            @Override
+            public void onAdDismissedFullScreenContent() {
+                // Called when ad is dismissed.
+                // Set the ad reference to null so you don't show the ad a second time.
+                Log.d(TAG, "Ad dismissed fullscreen content.");
+                mRewardedAd = null;
+                if (start_reward) {
+                    alerter(getString(R.string.fantastic), getString(R.string.about_alerter_message), MainMenuActivity.this, 1);
+                }else{
+                    alerter(getString(R.string.good), getString(R.string.about_not_complete_alerter_message), MainMenuActivity.this, 0);
+                }
+            }
+
+            @Override
+            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                // Called when ad fails to show.
+                Log.e(TAG, "Ad failed to show fullscreen content.");
+                mRewardedAd = null;
+//                onAdFailedToLoadErrorsCodes(MainMenuActivity.this, adError.getCode());
+            }
+
+            @Override
+            public void onAdImpression() {
+                // Called when an impression is recorded for an ad.
+                Log.d(TAG, "Ad recorded an impression.");
+                start_reward = true;
+                loadRewardedVideoAd();
+            }
+
+            @Override
+            public void onAdShowedFullScreenContent() {
+                // Called when ad is shown.
+                Log.d(TAG, "Ad showed fullscreen content.");
+            }
+        });
     }
 
     // TODO //////////////////// loadRewardedVideoAd ////////////////
     private void loadRewardedVideoAd() {
 
-        mRewardedVideoAd.loadAd(Constants.watch_Btn_RewardAd_b3_1,
-                new AdRequest.Builder()
-                        .build());
+        AdRequest adRequest = new AdRequest.Builder().build();
+        RewardedAd.load(this, Constants.watch_Btn_RewardAd_b3_1,
+                adRequest, new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error.
+                        Log.d(TAG, loadAdError.toString());
+                        mRewardedAd = null;
+                    }
+
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                        mRewardedAd = rewardedAd;
+                        ServerSideVerificationOptions options = new ServerSideVerificationOptions
+                                .Builder()
+                                .setCustomData("SAMPLE_CUSTOM_DATA_STRING")
+                                .build();
+                        mRewardedAd.setServerSideVerificationOptions(options);
+                        Log.d(TAG, "Ad was loaded.");
+                    }
+                });
     }
 
     @Override
@@ -365,7 +439,7 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse("market://details?id="+getPackageName());//shop.nicenews.displaynews
+                Uri uri = Uri.parse("market://details?id=com.bahertech.firstgame");//shop.nicenews.displaynews
                 Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
                 // To count with Play market backstack, After pressing back button,
                 // to taken back to our application, we need to add following flags to intent.
@@ -478,75 +552,23 @@ public class MainMenuActivity extends AppCompatActivity implements RewardedVideo
         watch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mRewardedVideoAd.isLoaded()) {
-                    Log.v(Constants.log + "232", "Main Menu Activity mRewardedVideoAd.isLoaded()");
-                    mRewardedVideoAd.show();
+                if (mRewardedAd != null) {
+                    Activity activityContext = MainMenuActivity.this;
+                    mRewardedAd.show(activityContext, new OnUserEarnedRewardListener() {
+                        @Override
+                        public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                            // Handle the reward.
+                            Log.d(TAG, "The user earned the reward.");
+                            Log.v(Constants.log + "232", "Main Menu Activity mRewardedVideoAd.isLoaded()");
+                            int rewardAmount = rewardItem.getAmount();
+                            String rewardType = rewardItem.getType();
+                        }
+                    });
+                } else {
+                    Log.d(TAG, "The rewarded ad wasn't ready yet.");
                 }
             }
         });
-
-    }
-
-    @Override
-    public void onResume() {
-        mRewardedVideoAd.resume(this);
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        mRewardedVideoAd.pause(this);
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        mRewardedVideoAd.destroy(this);
-        super.onDestroy();
-    }
-
-    @Override
-    public void onRewardedVideoAdLoaded() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdOpened() {
-
-    }
-
-    @Override
-    public void onRewardedVideoStarted() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdClosed() {
-        loadRewardedVideoAd();
-        if (start_reward == true) {
-            alerter(getString(R.string.fantastic), getString(R.string.about_alerter_message), MainMenuActivity.this, 1);
-        }else{
-            alerter(getString(R.string.good), getString(R.string.about_not_complete_alerter_message), MainMenuActivity.this, 0);
-        }
-    }
-
-    @Override
-    public void onRewarded(RewardItem rewardItem) {
-        start_reward = true;
-    }
-
-    @Override
-    public void onRewardedVideoAdLeftApplication() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdFailedToLoad(int i) {
-        onAdFailedToLoadErrorsCodes(MainMenuActivity.this, i);
-    }
-
-    @Override
-    public void onRewardedVideoCompleted() {
 
     }
 

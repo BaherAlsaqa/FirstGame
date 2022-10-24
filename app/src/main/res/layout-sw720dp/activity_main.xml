@@ -178,7 +178,7 @@
                 android:layout_centerInParent="true"
                 android:layout_alignParentTop="true"
                 ads:adSize="BANNER"
-                ads:adUnitId="ca-app-pub-1357552008801218/5570709502">
+                ads:adUnitId="ca-app-pub-1357552008801218/5587139764">
             </com.google.android.gms.ads.AdView>
 
             <pl.droidsonroids.gif.GifImageView
